@@ -199,7 +199,7 @@ def test_cart_object_elements(cart, submitter, experiment, dummy_request, thread
         f'cart={cart["uuid"]}'
     )
     c = Cart(dummy_request)
-    assert list(c.elements) == [experiment['@id'], experiment['@id']]
+    assert list(c.elements) == [experiment['@id']]
 
 
 def test_cart_object_as_params(cart, submitter, experiment, dummy_request, threadlocals, testapp, mocker):
@@ -214,10 +214,10 @@ def test_cart_object_as_params(cart, submitter, experiment, dummy_request, threa
     )
     c = Cart(dummy_request)
     assert dummy_request.embed.call_count == 0
-    assert c.as_params() == [('@id', experiment['@id']), ('@id', experiment['@id'])]
+    assert c.as_params() == [('@id', experiment['@id'])]
     assert dummy_request.embed.call_count == 1
     # Cache value
-    assert c.as_params() == [('@id', experiment['@id']), ('@id', experiment['@id'])]
+    assert c.as_params() == [('@id', experiment['@id'])]
     assert dummy_request.embed.call_count == 1
 
 
@@ -251,17 +251,11 @@ def test_cart_object_two_carts(cart, submitter, experiment, dummy_request, threa
     c = Cart(dummy_request)
     assert dummy_request.embed.call_count == 0
     assert c.as_params() == [
-        ('@id', experiment['@id']),
-        ('@id', experiment['@id']),
-        ('@id', experiment['@id']),
         ('@id', experiment['@id'])
     ]
     assert dummy_request.embed.call_count == 2
     # Cache value
     assert c.as_params() == [
-        ('@id', experiment['@id']),
-        ('@id', experiment['@id']),
-        ('@id', experiment['@id']),
         ('@id', experiment['@id'])
     ]
     assert dummy_request.embed.call_count == 2

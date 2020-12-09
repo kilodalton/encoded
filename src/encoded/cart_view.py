@@ -151,7 +151,7 @@ class Cart:
     @property
     def elements(self):
         if not self._elements:
-            self._elements = list(self._get_elements_from_carts())
+            self._elements = sorted(set(self._get_elements_from_carts()))
         self._validate_cart_size()
         yield from self._elements
 
